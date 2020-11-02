@@ -1,0 +1,14 @@
+[Unit]
+Description=X410 Autologin Service
+After=network.target x410vsock.service
+
+[Service]
+User=root
+Restart=always
+Type=simple
+EnvironmentFile=/etc/default/x410
+ExecStart=
+ExecStart=-/sbin/agetty --autologin $USER --noclear tty2 $TERM
+
+[Install]
+WantedBy=multi-user.target

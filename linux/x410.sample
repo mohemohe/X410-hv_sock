@@ -1,0 +1,9 @@
+USER=mohemohe
+DE=startxfce4
+
+DISPLAY=:0.0
+LANG=ja_JP.UTF-8
+GTK_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+QT_IM_MODULE=fcitx
+QT_QPA_PLATFORMTHEME="qt5ct"

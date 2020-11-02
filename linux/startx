@@ -1,0 +1,29 @@
+#!/bin/bash -x
+
+set -a
+source /etc/default/x410
+set +a
+
+if [ ! -z "$(pidof "${DE}")" ]; then
+  exit 1
+fi
+
+kill -9 "${DBUS_SESSION_BUS_PID}"
+pkill gpg-agent
+pkill ssh-agent
+pkill mozc-server
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+  for f in /etc/X11/xinit/xinitrc.d/?* ; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+cd "/home/${USER}"
+xrdb "/home/${USER}/.Xresources"
+
+dbus-launch fcitx-autostart &
+env KEYBASE_AUTOSTART=1 run_keybase &
+
+dbus-launch ${DE} 2>&1 | systemd-cat -t X410
